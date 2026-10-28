@@ -1,0 +1,160 @@
+
+body {
+    margin: 0;
+    padding: 30px;
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+.main-title {
+    text-align: center;
+    color: lightseagreen;
+    margin-bottom: 30px;
+}
+
+
+.movie-form {
+    margin-bottom: 25px;
+}
+
+
+.movie-form form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+
+.title-input,
+.rating-select,
+.genre-select {
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+.title-input {
+    width: 200px;
+}
+
+
+
+.add-button {
+    width: 120px;
+    height: 40px;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button {
+    padding: 10px 15px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.add-button:hover,
+.delete-button:hover {
+    background-color: aqua;
+}
+
+
+.movie-count {
+    margin-bottom: 20px;
+}
+
+
+.movie-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    margin: 20px 0;
+    list-style: none;
+}
+
+
+.movie-card {
+    display: flex;
+    width: 220px;
+    margin: 0;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+
+.movie-card h3 {
+    margin-top: 0;
+}
+
+
+.movie-card input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+
+.delete-button {
+    padding: 10px 15px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.empty-message {
+    color: black;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .movie-form form {
+        flex-direction: column;
+    }
+
+    .title-input,
+    .rating-select,
+    .genre-select,
+    .add-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .movie-card {
+        width: 100%;
+    }
+}
+
+
+

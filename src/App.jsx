@@ -1,16 +1,13 @@
-import {useState} from "react";
+import { useState } from "react";
+import "./App.moduile.css";
 
 function App() {
-    const [list, setList] = useState([
-
-    ]);
-
+    const [list, setList] = useState([]);
     const [title, setTitle] = useState("");
     const [rating, setRating] = useState("5");
     const [genre, setGenre] = useState("액션");
 
-    // 영화 추가
-    const addMovie = (e) => {
+    const addMovie = e => {
         e.preventDefault();
 
         if (title.trim() === "") {
@@ -18,148 +15,114 @@ function App() {
             return;
         }
 
-        const newMovie = {
+        const movie = {
             id: Date.now(),
-            title: title,
+            title,
             rating: Number(rating),
-            genre: genre,
-            completed: false
+            genre,
+            completed: false,
         };
 
-        setList([...list, newMovie]);
+        setList([...list, movie]);
         setTitle("");
         setRating("5");
         setGenre("액션");
     };
 
-    // 영화 삭제
-    const deleteMovie = (id) => {
-        setList(list.filter((movie) => movie.id !== id));
+    const deleteMovie = id => {
+        setList(list.filter(movie => movie.id !== id));
     };
 
-    // 관람 완료 상태 변경
-    const toggleCompleted = (id) => {
+    const toggleCompleted = id => {
         setList(
-            list.map((movie) =>
-                movie.id === id
-                    ? {...movie, completed: !movie.completed}
-                    : movie
-            )
+            list.map(movie =>
+                movie.id === id ? { ...movie, completed: !movie.completed } : movie,
+            ),
         );
     };
 
     return (
-        <>
-            <h1>나의 영화 기록장</h1>
+        <div className="container">
+            <h1 className="main-title">영화 기록장</h1>
 
-            {/* 영화 추가 폼 */}
-            <fieldset>
+            <fieldset className="movie-form">
                 <legend>새 영화 추가</legend>
 
                 <form onSubmit={addMovie}>
-                    <p>
-                        <label>
-                            영화 제목:{" "}
-                            <input
-                                type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder="영화 제목 입력"
-                            />
-                        </label>
-                    </p>
+                    <input
+                        className="title-input"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        placeholder="영화 제목 입력"
+                    />
 
-                    <p>
-                        <label>
-                            평점:{" "}
-                            <select
-                                value={rating}
-                                onChange={(e) => setRating(e.target.value)}
-                            >
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                    <option key={star} value={star}>
-                                        {"⭐".repeat(star)} ({star}점)
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </p>
+                    <select
+                        className="rating-select"
+                        value={rating}
+                        onChange={e => setRating(e.target.value)}>
+                        {[1, 2, 3, 4, 5].map(n => (
+                            <option key={n} value={n}>
+                                {n}점
+                            </option>
+                        ))}
+                    </select>
 
-                    <p>
-                        <label>
-                            장르:{" "}
-                            <select
-                                value={genre}
-                                onChange={(e) => setGenre(e.target.value)}
-                            >
-                                <option value="액션">액션</option>
-                                <option value="SF">SF</option>
-                                <option value="로맨스">로맨스</option>
-                                <option value="코미디">코미디</option>
-                                <option value="드라마">드라마</option>
-                                <option value="공포">공포</option>
-                                <option value="스릴러">스릴러</option>
-                            </select>
-                        </label>
-                    </p>
+                    <select
+                        className="genre-select"
+                        value={genre}
+                        onChange={e => setGenre(e.target.value)}>
+                        {["액션", "SF", "로맨스", "코미디", "공포", "드라마", "스릴러"].map(g => (
+                            <option key={g} value={g}>
+                                {g}
+                            </option>
+                        ))}
+                    </select>
 
-                    <button type="submit">영화 추가</button>
+                    <button className="add-button" type="submit">
+                        영화 추가
+                    </button>
                 </form>
             </fieldset>
 
-            {/* 영화 목록 */}
-            <fieldset>
-                <legend>Movie</legend>
-
+            <div className="movie-count">
                 <p>전체 영화: {list.length}편</p>
-                <p>
-                    감상 완료: {list.filter((movie) => movie.completed).length}편
-                </p>
+                <p>감상 완료: {list.filter(m => m.completed).length}편</p>
+            </div>
 
-                <ul>
-                    {list.map(() => {}
-                    )}
-                </ul>
+            <fieldset className="movie-list">
+                <legend>영화 목록</legend>
+
+                {list.length === 0 ? (
+                    <p className="empty-message">등록된 영화가 없습니다.</p>
+                ) : (
+                    <ul>
+                        {list.map(movie => (
+                            <li className="movie-card" key={movie.id}>
+                                <h3>{movie.title}</h3>
+                                <p>평점: {"⭐".repeat(movie.rating)}</p>
+                                <p>장르: {movie.genre}</p>
+
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={movie.completed}
+                                        onChange={() => toggleCompleted(movie.id)}
+                                    />
+                                    관람 완료
+                                </label>
+
+                                <button
+                                    className="delete-button"
+                                    type="button"
+                                    onClick={() => deleteMovie(movie.id)}>
+                                    삭제
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </fieldset>
-
-            <fieldset style={{display: "flex",
-                flexWrap: "wrap"}}>
-                <div style={{display: "flex"}}>
-                <ul>
-                    {list.map((movie) => (
-                        <li key={movie.id}>
-                            <h3>{movie.title}</h3>
-
-                            <p>
-                                평점: {"⭐".repeat(movie.rating)}
-                                {" "}({movie.rating}점)
-                            </p>
-
-                            <p>장르: {movie.genre}</p>
-
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={movie.completed}
-                                    onChange={() => toggleCompleted(movie.id)}
-                                />
-                                관람 완료
-                            </label>
-
-                            <button
-                                type="button"
-                                onClick={() => deleteMovie(movie.id)}
-                            >
-                                삭제
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-                </div>
-
-                {list.length === 0 && <p>등록된 영화가 없습니다.</p>}
-            </fieldset>
-        </>
+        </div>
     );
 }
 
